@@ -2,18 +2,14 @@ body {
     font-family: Arial, sans-serif;
 }
 
-form {
-    margin-bottom: 2em;
+button {
+    margin: 10px;
+    padding: 10px;
+    font-size: 16px;
 }
 
-label, input {
-    display: block;
-    margin-bottom: 0.5em;
-}
-
-input[type="text"], input[type="number"] {
-    width: 100%;
-    box-sizing: border-box;
+#statDetails {
+    margin-top: 20px;
 }
 nav {
     background-color: #333;

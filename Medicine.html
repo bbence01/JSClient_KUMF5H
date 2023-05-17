@@ -1,0 +1,34 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="utf-8">
+    <title>Medicine</title>
+    <link rel="stylesheet" type="text/css" href="Medicine.css">
+</head>
+<body>
+    <nav>
+        <ul>
+            <li><a href="Producer.html">Producer</a></li>
+            <li><a href="Medicine.html">Medicine</a></li>
+            <li><a href="Patient.html">Patient</a></li>
+            <li><a href="Stat.html">Stat</a></li>
+        </ul>
+    </nav>
+    <h1>Medicine Details</h1>
+
+    <form id="medicineForm">
+        <label for="medicineName">Medicine Name:</label>
+        <input type="text" id="medicineName" name="medicineName" required>
+
+        <label for="producerId">Producer ID:</label>
+        <input type="text" id="producerId" name="producerId" required>
+
+        <button type="submit">Create Medicine</button>
+    </form>
+
+    <h1>Medicine List</h1>
+    <div id="medicine-list"></div>
+
+    <script src="Medicine.js"></script>
+</body>
+</html>

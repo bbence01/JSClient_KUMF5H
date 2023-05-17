@@ -1,0 +1,34 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="utf-8">
+    <title>Patient</title>
+    <link rel="stylesheet" type="text/css" href="Patient.css">
+</head>
+<body>
+    <nav>
+        <ul>
+            <li><a href="Producer.html">Producer</a></li>
+            <li><a href="Medicine.html">Medicine</a></li>
+            <li><a href="Patient.html">Patient</a></li>
+            <li><a href="Stat.html">Stat</a></li>
+        </ul>
+    </nav>
+    <h1>Patient Details</h1>
+
+    <form id="patientForm">
+        <label for="patientName">Patient Name:</label>
+        <input type="text" id="patientName" name="patientName" required>
+
+        <label for="age">Age:</label>
+        <input type="number" id="age" name="age" required>
+
+        <button type="submit">Create Patient</button>
+    </form>
+
+    <h1>Patient List</h1>
+    <div id="patient-list"></div>
+
+    <script src="Patient.js"></script>
+</body>
+</html>
