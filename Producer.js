@@ -141,50 +141,50 @@ function deleteProducer(id) {
         let producer = data[0];
 
         // Now you can access producerName and location
+        let producerForm = document.getElementById('producerForm');
         producerForm.innerHTML = `
-            <input type="text" id="producer-name" value="${producer.producerName}">
-            <input type="text" id="producer-location" value="${producer.location}">
-            <button type="submit" id="submit-btn">Submit</button>
+            <label for="producerName">Producer Name:</label>
+            <input type="text" id="producerName" value="${producer.producerName}" required>
+            <label for="location">Location:</label>
+            <input type="text" id="location" value="${producer.location}" required>
+            <button type="submit" id="update-btn">Update</button>
             <button type="button" id="cancel-btn">Cancel</button>
-
         `;
-        document.getElementById('submit-btn').addEventListener('click', function() {
-            location.reload();
+
+        document.getElementById('update-btn').addEventListener('click', function(event) {
+            event.preventDefault(); // prevent form from submitting normally
+
+            // Create a producer object with the updated data.
+            const updatedProducer = {
+                id: id,
+                producerName: document.getElementById('producerName').value,
+                location: document.getElementById('location').value
+            };
+
+            // Send a PUT request with the updated data.
+            fetch(`${api_url}`, {
+                method: 'PUT',
+                headers: {
+                    'Content-Type': 'application/json',
+                },
+                body: JSON.stringify(updatedProducer),
+            })
+            .then(response => {
+                if (response.ok) {
+                    alert('Producer updated successfully!');
+                    location.reload(); // refresh the page to see the updated producer list
+                } else {
+                    alert('Error: Could not update producer.');
+                }
+            })
+            .catch(error => console.error('Error:', error));
         });
+
         document.getElementById('cancel-btn').addEventListener('click', function() {
             location.reload();
         });
-
-            // Attach an event listener to the form.
-            producerForm.addEventListener('submit', (event) => {
-                event.preventDefault();  // Prevent the form from being submitted normally.
-
-                // Create a producer object with the updated data.
-                const updatedProducer = {
-                    id: id,
-                    producerName: document.getElementById('producer-name').value,
-                    location: document.getElementById('producer-location').value
-                };
-
-                // Send a PUT request with the updated data.
-                fetch(`${api_url}`, {
-                    method: 'PUT',
-                    headers: {
-                        'Content-Type': 'application/json',
-                    },
-                    body: JSON.stringify(updatedProducer),
-                })
-                .then(response => {
-                    if (response.ok) {
-                        alert('Producer updated successfully!');
-                        fetchProducers();  // Fetch producers again to update the list.
-                    } else {
-                        alert('Error: Could not update producer.');
-                    }
-                })
-                .catch(error => console.error('Error:', error));
-            });
-        })
-        .catch(error => console.error('Error:', error));
+    })
+    .catch(error => console.error('Error:', error));
 }
+
 
