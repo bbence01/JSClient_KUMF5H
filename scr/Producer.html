@@ -1,0 +1,48 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="utf-8">
+    <title>Producer</title>
+    <link rel="stylesheet" type="text/css" href="Producer.css">
+</head>
+<body>
+    <nav>
+        <ul>
+            <li><a href="Producer.html">Producer</a></li>
+            <li><a href="Medicine.html">Medicine</a></li>
+            <li><a href="Patient.html">Patient</a></li>
+            <li><a href="Stat.html">Stat</a></li>
+        </ul>
+    </nav>
+    <h1>Producer Details</h1>
+
+    <form id="producerForm">
+        <label for="producerName">Producer Name:</label>
+        <input type="text" id="producerName" name="producerName" required>
+
+        <label for="location">Location:</label>
+        <input type="text" id="location" name="location" required>
+
+        <button type="submit" id="create-btn">Create Producer</button>
+    </form>
+
+    
+
+    <div id="producerDetails"></div>
+
+    <h1>Producer List</h1>
+    <div id="producerDetails"></div>
+
+    <div id="producer-list"></div>
+
+
+    <script src="https://cdn.jsdelivr.net/npm/@microsoft/signalr@latest/dist/browser/signalr.min.js"></script>
+
+
+    <script src="Producer.js" >
+
+
+
+    </script>
+</body>
+</html>
