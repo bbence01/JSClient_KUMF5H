@@ -107,9 +107,9 @@ function editMedicine(id) {
             let medicine = data[0];
 
             medicineForm.innerHTML = `
-                <input type="text" id="medicine-name" value="${medicine.medicineName}">
-                <input type="number" id="base-price" value="${medicine.basePrice}">
-                <input type="number" id="producer-id" value="${medicine.producerID}">
+                <input type="text" id="medicineName" value="${medicine.medicineName}">
+                <input type="number" id="basePrice" value="${medicine.basePrice}">
+                <input type="number" id="producerID" value="${medicine.producerID}">
                 <input type="text" id="heals" value="${medicine.heals}">
                 <button type="submit" id="submit-btn">Submit</button>
                 <button type="button" id="cancel-btn">Cancel</button>
