@@ -1,6 +1,19 @@
 // Change this URL to match your API
 const api_url = 'http://localhost:5000/Patient';
 
+
+const  connection2 = new signalR.HubConnectionBuilder()
+    .withUrl("http://localhost:5000/hub") // replace with your SignalR Hub URL
+    .build();
+
+
+
+
+    connection2.start()
+    .then(() => console.log("Connected!"))
+    .catch(err => console.log(err));
+
+
 function displayPatients(data) {
     const patientList = document.getElementById('patient-list');
 
@@ -11,7 +24,8 @@ function displayPatients(data) {
         patientItem.innerHTML = `
             Id: ${patient.id}, 
             Name: ${patient.patientName}, 
-            Disease: ${patient.disease} 
+            illness: ${patient.illness} ,
+            MedicineID: ${patient.medicineID} 
             <button class="edit-button" data-id="${patient.id}">Edit</button>
             <button class="delete-button" data-id="${patient.id}">Delete</button>
         `;
@@ -21,6 +35,17 @@ function displayPatients(data) {
 }
 
 fetchPatients();
+
+
+connection2.on("PatientCreated", (patient) => {
+    fetchPatients(); // Refetch producers after a new one is created
+});
+connection2.on("PatientUpdated", (patient) => {
+    fetchPatients(); // Refetch producers after a new one is created
+});
+connection2.on("PatientDeleted", (patient) => {
+    fetchPatients(); // Refetch producers after a new one is created
+});
 
 function fetchPatients() {
     fetch(api_url)
@@ -54,11 +79,11 @@ document.getElementById('patientForm').addEventListener('submit', function(e) {
     e.preventDefault(); 
 
     let patientName = document.getElementById('patientName').value;
-    let disease = document.getElementById('disease').value;
+    let illness = document.getElementById('illness').value;
 
     let newPatient = {
         PatientName: patientName,
-        Disease: disease
+        Illness: illness
     };
 
     fetch(api_url, {
@@ -108,8 +133,11 @@ function editPatient(id) {
         patientForm.innerHTML = `
             <label for="patientName">Patient Name:</label>
             <input type="text" id="patientName" value="${patient.patientName}" required>
-            <label for="disease">Disease:</label>
-            <input type="text" id="disease" value="${patient.disease}" required>
+            <label for="illness">illness:</label>
+            <input type="text" id="illness" value="${patient.illness}" required>
+            <label for="medicineID">medicineID:</label>
+            <input type="text" id="medicineID" value="${patient.medicineID}" required>
+           
             <button type="submit" id="update-btn">Update</button>
             <button type="button" id="cancel-btn">Cancel</button>
         `;
@@ -120,7 +148,7 @@ function editPatient(id) {
             const updatedPatient = {
                 id: id,
                 patientName: document.getElementById('patientName').value,
-                disease: document.getElementById('disease').value
+                illness: document.getElementById('illness').value
             };
 
             fetch(`${api_url}`, {

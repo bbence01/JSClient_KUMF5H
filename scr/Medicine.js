@@ -1,5 +1,14 @@
 const api_url = 'http://localhost:5000/Medicine';
 
+
+const  connection = new signalR.HubConnectionBuilder()
+    .withUrl("http://localhost:5000/hub") // replace with your SignalR Hub URL
+    .build();
+
+    connection.start()
+    .then(() => console.log("Connected!"))
+    .catch(err => console.log(err));
+
 function displayMedicines(data) {
     const medicineList = document.getElementById('medicine-list');
     medicineList.innerHTML = '';
@@ -19,6 +28,17 @@ function displayMedicines(data) {
         medicineList.appendChild(medicineItem);
     });
 }
+
+
+connection.on("MedicineCreated", (medicine) => {
+    fetchMedicines(); // Refetch producers after a new one is created
+});
+connection.on("MedicineUpdated", (medicine) => {
+    fetchMedicines(); // Refetch producers after a new one is created
+});
+connection.on("MedicineDeleted", (medicine) => {
+    fetchMedicines(); // Refetch producers after a new one is created
+});
 
 function fetchMedicines() {
     fetch(api_url)
