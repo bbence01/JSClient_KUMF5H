@@ -80,10 +80,12 @@ document.getElementById('patientForm').addEventListener('submit', function(e) {
 
     let patientName = document.getElementById('patientName').value;
     let illness = document.getElementById('illness').value;
+    let medicineID = document.getElementById('medicineID').value;
 
     let newPatient = {
         PatientName: patientName,
-        Illness: illness
+        Illness: illness,
+        MedicineID: medicineID
     };
 
     fetch(api_url, {
@@ -104,9 +106,10 @@ document.getElementById('patientForm').addEventListener('submit', function(e) {
         e.target.reset();
         fetchPatients();
     })
+    .then(() => location.reload()) // move location.reload() here
     .catch(error => console.error('Error:', error));
-    location.reload();
 });
+
 
 function deletePatient(id) {
     fetch(`${api_url}/${id}`, {
@@ -148,7 +151,8 @@ function editPatient(id) {
             const updatedPatient = {
                 id: id,
                 patientName: document.getElementById('patientName').value,
-                illness: document.getElementById('illness').value
+                illness: document.getElementById('illness').value,
+                medicineID: document.getElementById('medicineID').value
             };
 
             fetch(`${api_url}`, {

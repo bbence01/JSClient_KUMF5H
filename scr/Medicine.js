@@ -101,8 +101,8 @@ document.getElementById('medicineForm').addEventListener('submit', function(e) {
         e.target.reset();
         fetchMedicines();
     })
+    .then(() => location.reload()) // move location.reload() here
     .catch(error => console.error('Error:', error));
-    location.reload();
 });
 
 function deleteMedicine(id) {
@@ -126,31 +126,24 @@ function editMedicine(id) {
         .then(data => {
             let medicine = data[0];
 
+            let medicineForm = document.getElementById('medicineForm');
             medicineForm.innerHTML = `
                 <input type="text" id="medicineName" value="${medicine.medicineName}">
                 <input type="number" id="basePrice" value="${medicine.basePrice}">
                 <input type="number" id="producerID" value="${medicine.producerID}">
                 <input type="text" id="heals" value="${medicine.heals}">
-                <button type="submit" id="submit-btn">Submit</button>
+                <button type="submit" id="update-btn">Update</button>
                 <button type="button" id="cancel-btn">Cancel</button>
             `;
 
-            document.getElementById('submit-btn').addEventListener('click', function() {
-                location.reload();
-            });
-            
-            document.getElementById('cancel-btn').addEventListener('click', function() {
-                location.reload();
-            });
-
-            medicineForm.addEventListener('submit', (event) => {
+            document.getElementById('update-btn').addEventListener('click', function(event) {
                 event.preventDefault();
 
                 const updatedMedicine = {
                     id: id,
-                    medicineName: document.getElementById('medicine-name').value,
-                    basePrice: document.getElementById('base-price').value,
-                    producerID: document.getElementById('producer-id').value,
+                    medicineName: document.getElementById('medicineName').value,
+                    basePrice: document.getElementById('basePrice').value,
+                    producerID: document.getElementById('producerID').value,
                     heals: document.getElementById('heals').value
                 };
 
@@ -164,15 +157,20 @@ function editMedicine(id) {
                 .then(response => {
                     if (response.ok) {
                         alert('Medicine updated successfully!');
-                        fetchMedicines();
                     } else {
                         alert('Error: Could not update medicine.');
                     }
                 })
+                .then(() => location.reload()) // move location.reload() here
                 .catch(error => console.error('Error:', error));
+            });
+
+            document.getElementById('cancel-btn').addEventListener('click', function() {
+                location.reload();
             });
         })
         .catch(error => console.error('Error:', error));
 }
+
 
 fetchMedicines();
